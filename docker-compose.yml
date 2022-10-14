@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: /docker-gs-ping
+    volumes:
+      - ./:/app/
+    ports:
+      - 8080:8080
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0.21
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: service1234
+    volumes:
+      - gogonic_test_mysql_data:/var/lib/mysql
+
+
+volumes:
+  gogonic_test_mysql_data:
